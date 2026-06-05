@@ -6,11 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const IMPERATRIZ = { lat: -5.5269, lng: -47.4781 };
 
-  // Agora cada evento tem array de fotos
   const EVENTOS_MOCK = [
     {
       id: 1,
-      nome: "Bar Seu Manel",
+      nome: "Quintal do Espeto",
       local: "Nova Imperatriz",
       lat: -5.5180, lng: -47.4910,
       fotos: [
@@ -24,11 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
       hora: "21h - 03h",
       tags: ["pagode", "sertanejo", "universitario"],
       bombando: 89,
-      desc: "Entrada R$20. Open de caipirinha até 23h. Ambiente climatizado."
+      desc: "Entrada R$20. Open de caipirinha até 23h. Ambiente climatizado. Aniversariante do mês não paga."
     },
     {
       id: 2,
-      nome: "DBB Draft Beer Bar",
+      nome: "Arena Premium",
       local: "Centro",
       lat: -5.5305, lng: -47.4785,
       fotos: [
@@ -43,11 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
       hora: "22h - 05h",
       tags: ["forro", "sertanejo"],
       bombando: 156,
-      desc: "MULHER VIP até 00h. Área VIP open bar R$120. Estacionamento grátis."
+      desc: "MULHER VIP até 00h. Área VIP open bar R$120. Estacionamento grátis. Proibido camisa de time."
     },
     {
       id: 3,
-      nome: "Lunna Lounge ITZ",
+      nome: "Prime Beach Club",
       local: "Beira Rio",
       lat: -5.5380, lng: -47.4650,
       fotos: [
@@ -61,14 +60,50 @@ document.addEventListener('DOMContentLoaded', () => {
       hora: "16h - 22h",
       tags: ["eletronica", "house", "sunset"],
       bombando: 67,
-      desc: "Domingão na beira do Tocantins. Dose dupla de gin até 18h."
+      desc: "Domingão na beira do Tocantins. Dose dupla de gin até 18h. Ingresso 1º lote esgotado."
+    },
+    {
+      id: 4,
+      nome: "Buteco do Gaúcho",
+      local: "Bacuri",
+      lat: -5.5145, lng: -47.4820,
+      fotos: [
+        "https://images.unsplash.com/photo-1504609813442-a8924e83f76e?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=600&h=600&fit=crop"
+      ],
+      avatar: "🍺",
+      atracao: "Sertanejo ao vivo",
+      preco: 0,
+      hora: "18h - 00h",
+      tags: ["sertanejo", "bar", "modao"],
+      bombando: 43,
+      desc: "Entrada GRÁTIS. Couvert R$15. Espetinho + cerveja gelada. Música ao vivo toda sexta."
+    },
+    {
+      id: 5,
+      nome: "Mansão Club",
+      local: "Parque Alvorada",
+      lat: -5.5450, lng: -47.4880,
+      fotos: [
+        "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600&h=600&fit=crop"
+      ],
+      avatar: "🔥",
+      atracao: "Baile Funk - MC 7 Belo + Convidados",
+      preco: 25,
+      hora: "23h - 06h",
+      tags: ["funk", "mandela"],
+      bombando: 214,
+      desc: "R$25 até 01h. Depois R$40. Proibido boné. +18 com documento. Melhor baile da região."
     }
   ];
 
   let map;
   let markers = [];
   let eventosFiltrados = [...EVENTOS_MOCK];
-  let carrosseis = {}; // Guarda os intervals de cada post
+  let carrosseis = {};
+  let eventoModalAtual = null;
 
   function initMap() {
     map = L.map('map').setView([IMPERATRIZ.lat, IMPERATRIZ.lng], 14);
@@ -76,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderizarFeed(eventos) {
-    // Limpa intervals antigos
     Object.values(carrosseis).forEach(clearInterval);
     carrosseis = {};
 
@@ -123,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       feed.appendChild(post);
 
-      // Inicia carrossel se tiver mais de 1 foto
       if (evento.fotos.length > 1) {
         iniciarCarrossel(evento.id, evento.fotos.length);
       }
@@ -142,13 +175,11 @@ document.addEventListener('DOMContentLoaded', () => {
       dots.forEach((dot, i) => dot.classList.toggle('ativo', i === idx));
     }
 
-    // Autoplay de 10 segundos
     carrosseis[id] = setInterval(() => {
       indexAtual = (indexAtual + 1) % totalFotos;
       irParaSlide(indexAtual);
     }, 10000);
 
-    // Pausa no hover
     carrossel.addEventListener('mouseenter', () => clearInterval(carrosseis[id]));
     carrossel.addEventListener('mouseleave', () => {
       carrosseis[id] = setInterval(() => {
@@ -157,7 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 10000);
     });
 
-    // Arrastar no touch
     let startX = 0;
     carrossel.addEventListener('touchstart', e => startX = e.touches[0].clientX);
     carrossel.addEventListener('touchend', e => {
@@ -168,7 +198,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Clicar nos dots
     dots.forEach((dot, idx) => {
       dot.onclick = () => irParaSlide(idx);
     });
@@ -180,35 +209,72 @@ document.addEventListener('DOMContentLoaded', () => {
     markers = [];
     eventos.forEach(evento => {
       const marker = L.marker([evento.lat, evento.lng]).addTo(map)
-       .bindPopup(`<b>${evento.nome}</b><br>${evento.atracao}<br>${evento.local}`);
+      .bindPopup(`<b>${evento.nome}</b><br>${evento.atracao}<br>${evento.local}`);
       marker.id = evento.id;
       markers.push(marker);
     });
   }
 
-  // Modal agora recebe o index da foto clicada
   const modal = document.getElementById('modal');
-  const modalFechar = document.querySelector('.modal-fechar');
+  const modalFechar = document.querySelector('.modal-fechar-full');
 
   window.abrirModal = function(id, fotoIndex = 0) {
     const evento = EVENTOS_MOCK.find(e => e.id === id);
-    document.getElementById('modal-img').src = evento.fotos[fotoIndex];
-    document.getElementById('modal-avatar').textContent = evento.avatar;
-    document.getElementById('modal-nome').textContent = evento.nome;
-    document.getElementById('modal-local').textContent = `${evento.local} • ${evento.hora}`;
-    document.getElementById('modal-atracao').textContent = evento.atracao;
-    document.getElementById('modal-descricao').textContent = evento.desc;
-    document.getElementById('modal-preco').textContent = `Entrada: R$ ${evento.preco}`;
-    document.getElementById('modal-tags').innerHTML = evento.tags.map(t => `<span class="tag">#${t}</span>`).join('');
+    eventoModalAtual = evento;
 
-    const btnModal = document.getElementById('modal-btn');
-    btnModal.onclick = () => confirmarPresenca(btnModal, id);
+    document.getElementById('modal-img-full').src = evento.fotos[fotoIndex];
+    document.getElementById('modal-nome-full').textContent = evento.nome;
+    document.getElementById('modal-atracao-full').textContent = evento.atracao;
+    document.getElementById('modal-bombando-full').textContent = evento.bombando;
+    document.getElementById('modal-hora-full').textContent = evento.hora.split(' - ')[0];
+    document.getElementById('modal-preco-full').textContent = `R$ ${evento.preco}`;
+    document.getElementById('modal-desc-full').textContent = evento.desc;
+    document.getElementById('modal-tags-full').innerHTML = evento.tags.map(t => `<span class="tag">#${t}</span>`).join('');
+
+    const vagas = Math.max(12, 100 - evento.bombando);
+    document.getElementById('modal-vagas').textContent = vagas;
+    document.getElementById('modal-urgencia').textContent =
+      vagas < 20? `🔥 ÚLTIMAS ${vagas} VAGAS!` : `Últimas ${vagas} vagas no 1º lote`;
+
+    const status = evento.bombando > 150? '🔥 LOTANDO AGORA' :
+                   evento.bombando > 80? '🔥 BOMBA HOJE' : '⚡ COMEÇANDO A BOMBAR';
+    document.getElementById('modal-status').textContent = status;
+
+    const btn = document.getElementById('modal-btn-full');
+    btn.onclick = () => confirmarPresencaModal(btn, id);
 
     modal.classList.add('ativo');
+    document.body.style.overflow = 'hidden';
   }
 
-  modalFechar.onclick = () => modal.classList.remove('ativo');
-  window.onclick = (e) => { if (e.target === modal) modal.classList.remove('ativo'); }
+  window.compartilharModal = function() {
+    if (eventoModalAtual) compartilhar(eventoModalAtual.id);
+  }
+
+  function confirmarPresencaModal(btn, id) {
+    const evento = EVENTOS_MOCK.find(e => e.id === id);
+    if (btn.classList.contains('confirmado')) {
+      btn.classList.remove('confirmado');
+      btn.innerHTML = `<span>GARANTIR MINHA VAGA</span><small>Restam <b>${Math.max(12, 100 - evento.bombando)}</b></small>`;
+      evento.bombando--;
+    } else {
+      btn.classList.add('confirmado');
+      btn.innerHTML = `<span>✓ VAGA GARANTIDA</span><small>Te vejo lá!</small>`;
+      evento.bombando++;
+    }
+    document.getElementById('modal-bombando-full').textContent = evento.bombando;
+    renderizarFeed(eventosFiltrados);
+  }
+
+  modalFechar.onclick = () => {
+    modal.classList.remove('ativo');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelector('.modal-bg').onclick = () => {
+    modal.classList.remove('ativo');
+    document.body.style.overflow = '';
+  }
 
   window.curtir = function(el) {
     el.textContent = el.textContent === '🤍'? '❤️' : '🤍';
@@ -250,7 +316,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Filtros
   document.querySelectorAll('.filtros button').forEach(btn => {
     btn.onclick = () => {
       document.querySelector('.filtro-ativo').classList.remove('filtro-ativo');
@@ -262,7 +327,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   });
 
-  // Inicia
   initMap();
   renderizarFeed(EVENTOS_MOCK);
   renderizarMapa(EVENTOS_MOCK);
