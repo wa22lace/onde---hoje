@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RolêITZ</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>Roles em ITZ
+      </h1>
+      <div class="filtros">
+        <button class="filtro-ativo" data-tag="todos">🔥 Bombando</button>
+        <button data-tag="sertanejo">Sertanejo</button>
+        <button data-tag="funk">Funk</button>
+        <button data-tag="eletronica">Eletrônica</button>
+        <button data-tag="open-bar">Open Bar</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="feed-wrapper">
+      <div id="feed"></div>
+    </div>
+    <div id="map"></div>
+  </div>
+
+  <!-- Modal estilo Instagram -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="modal-fechar">&times;</span>
+      <img id="modal-img" src="" alt="">
+      <div class="modal-info">
+        <div class="modal-header">
+          <div id="modal-avatar" class="post-avatar"></div>
+          <div>
+            <h3 id="modal-nome"></h3>
+            <p id="modal-local"></p>
+          </div>
+        <div class="modal-desc">
+          <p id="modal-atracao"></p>
+          <p id="modal-descricao"></p>
+          <p id="modal-preco"></p>
+          <div id="modal-tags" class="post-tags"></div>
+        </div>
+        <button id="modal-btn" class="btn-toindo">Tô indo</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>
