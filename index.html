@@ -1,937 +1,144 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  height: 100%;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background: #000;
-  color: #fff;
-  overflow-x: hidden;
-}
-
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: #000;
-  border-bottom: 1px solid #262626;
-  z-index: 1000;
-}
-
-.header-content {
-  max-width: 975px;
-  margin: 0 auto;
-  padding: 12px 20px;
-}
-
-h1 {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 12px;
-}
-
-.filtros {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.filtros::-webkit-scrollbar {
-  display: none;
-}
-
-.filtros button {
-  background: #262626;
-  border: none;
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.2s;
-}
-
-.filtros button:hover {
-  background: #363636;
-}
-
-.filtros button.filtro-ativo {
-  background: #fff;
-  color: #000;
-  font-weight: 600;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  margin-top: 105px;
-  max-width: 975px;
-  margin-left: auto;
-  margin-right: auto;
-  gap: 28px;
-  padding: 0 20px;
-  min-height: calc(100vh - 105px);
-}
-
-.feed-wrapper {
-  width: 100%;
-  max-width: 470px;
-}
-
-/* Stories Bar */
-.stories-bar {
-  background: #000;
-  border: 1px solid #262626;
-  border-radius: 8px;
-  padding: 16px 0;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
-
-.stories-container {
-  display: flex;
-  gap: 16px;
-  padding: 0 16px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.stories-container::-webkit-scrollbar {
-  display: none;
-}
-
-.story-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.story-avatar {
-  width: 66px;
-  height: 66px;
-  border-radius: 50%;
-  padding: 3px;
-  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.story-avatar.visto {
-  background: #363636;
-}
-
-.story-avatar img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 3px solid #000;
-  object-fit: cover;
-}
-
-.story-avatar.adicionar {
-  background: #262626;
-  font-size: 32px;
-  color: #0095f6;
-}
-
-.story-nome {
-  font-size: 12px;
-  color: #fff;
-  max-width: 70px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.story-ao-vivo {
-  position: absolute;
-  bottom: 0;
-  background: #dc2743;
-  color: white;
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-weight: 700;
-  border: 2px solid #000;
-}
-
-/* Ranking Semanal */
-.ranking-container {
-  background: #000;
-  border: 1px solid #262626;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 20px;
-}
-
-.ranking-titulo {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.ranking-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  background: #121212;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.ranking-item:hover {
-  background: #1a1a1a;
-}
-
-.ranking-posicao {
-  font-size: 24px;
-  font-weight: 800;
-  width: 32px;
-  text-align: center;
-}
-
-.ranking-posicao.primeiro {
-  background: linear-gradient(135deg, #FFD700, #FFA500);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.ranking-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(45deg, #f09433, #dc2743);
-}
-
-.ranking-info {
-  flex: 1;
-}
-
-.ranking-info strong {
-  display: block;
-  font-size: 14px;
-}
-
-.ranking-info span {
-  font-size: 12px;
-  color: #a8a8a8;
-}
-
-.ranking-badge {
-  background: rgba(220, 39, 67, 0.2);
-  color: #dc2743;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-/* Map Sidebar */
-.map-sidebar {
-  width: 320px;
-  position: sticky;
-  top: 125px;
-  height: calc(100vh - 125px);
-  flex-shrink: 0;
-}
-
-.map-controles {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.btn-map-ctrl {
-  flex: 1;
-  background: #262626;
-  border: none;
-  color: #fff;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-map-ctrl:hover {
-  background: #363636;
-}
-
-.btn-map-ctrl.ativo {
-  background: #dc2743;
-}
-
-#map {
-  width: 100%;
-  height: calc(100% - 50px);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.post {
-  background: #000;
-  border: 1px solid #262626;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
-
-.post-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-}
-
-.post-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
-}
-
-.post-info h3 {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.post-info p {
-  font-size: 12px;
-  color: #a8a8a8;
-}
-
-.post-countdown {
-  margin-left: auto;
-  background: rgba(220, 39, 67, 0.15);
-  color: #dc2743;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.post-countdown.urgente {
-  background: #dc2743;
-  color: white;
-  animation: pulse 1.5s infinite;
-}
-
-/* Carrossel */
-.carrossel {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  background: #121212;
-}
-
-.carrossel-track {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.4s ease;
-  will-change: transform;
-}
-
-.carrossel-img {
-  min-width: 100%;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  flex-shrink: 0;
-  flex-grow: 0;
-  cursor: pointer;
-  display: block;
-}
-
-.carrossel-dots {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 6px;
-  z-index: 5;
-}
-
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.4);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.dot.ativo {
-  background: #fff;
-  width: 18px;
-  border-radius: 3px;
-}
-
-.post-actions {
-  padding: 8px 12px;
-  display: flex;
-  gap: 16px;
-  font-size: 24px;
-}
-
-.post-actions span {
-  cursor: pointer;
-  transition: transform 0.1s;
-  user-select: none;
-}
-
-.post-actions span:active {
-  transform: scale(0.9);
-}
-
-.post-actions span:last-child:active {
-  transform: scale(0.9) rotate(15deg);
-}
-
-.post-bombando {
-  padding: 0 12px;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.post-desc {
-  padding: 0 12px 8px;
-  font-size: 14px;
-  line-height: 18px;
-}
-
-.post-desc b {
-  font-weight: 600;
-}
-
-.post-tags {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  padding: 0 12px 12px;
-}
-
-.tag {
-  color: #0095f6;
-  font-size: 14px;
-}
-
-.btn-toindo {
-  width: calc(100% - 24px);
-  margin: 0 12px 12px;
-  background: #0095f6;
-  border: none;
-  color: white;
-  padding: 7px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.btn-toindo.indo {
-  background: #262626;
-}
-
-.btn-toindo:active {
-  opacity: 0.7;
-}
-
-/* Modal Imersivo Full */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 3000;
-  inset: 0;
-}
-
-.modal.ativo {
-  display: block;
-}
-
-.modal-bg {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.95);
-  backdrop-filter: blur(20px);
-}
-
-.modal-content-full {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes zoomIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-.modal-barra-top {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: rgba(255,255,255,0.2);
-  z-index: 10;
-}
-
-.modal-progresso {
-  height: 100%;
-  background: linear-gradient(90deg, #f09433, #e6683c, #dc2743);
-  width: 0%;
-  animation: progresso 10s linear infinite;
-}
-
-@keyframes progresso {
-  to { width: 100%; }
-}
-
-.modal-fechar-full {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgba(0,0,0,0.5);
-  border: none;
-  color: white;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  font-size: 28px;
-  cursor: pointer;
-  z-index: 20;
-  backdrop-filter: blur(10px);
-  line-height: 36px;
-}
-
-.modal-foto-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 450px;
-  height: 100vh;
-  max-height: 900px;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-#modal-img-full {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.modal-gradiente {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg,
-    transparent 0%,
-    transparent 40%,
-    rgba(0,0,0,0.6) 70%,
-    rgba(0,0,0,0.95) 100%
-  );
-}
-
-.modal-overlay-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 24px 20px;
-  color: white;
-}
-
-.modal-tag-lotacao {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(220, 39, 67, 0.9);
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  backdrop-filter: blur(10px);
-}
-
-.pulse {
-  width: 8px;
-  height: 8px;
-  background: white;
-  border-radius: 50%;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.2); }
-}
-
-.modal-countdown {
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(10px);
-  padding: 10px 16px;
-  border-radius: 8px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.modal-countdown span {
-  font-size: 11px;
-  opacity: 0.7;
-  text-transform: uppercase;
-}
-
-.modal-countdown strong {
-  font-size: 16px;
-  font-weight: 700;
-  color: #FFD700;
-}
-
-#modal-nome-full {
-  font-size: 32px;
-  font-weight: 800;
-  margin-bottom: 4px;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
-
-#modal-atracao-full {
-  font-size: 16px;
-  opacity: 0.9;
-  margin-bottom: 20px;
-  font-weight: 500;
-}
-
-.modal-stats {
-  display: flex;
-  gap: 24px;
-  margin-bottom: 16px;
-  padding: 16px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
-}
-
-.stat {
-  text-align: center;
-}
-
-.stat strong {
-  display: block;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.stat span {
-  font-size: 11px;
-  opacity: 0.7;
-  text-transform: uppercase;
-}
-
-.modal-aviso {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(255, 193, 7, 0.15);
-  border: 1px solid rgba(255, 193, 7, 0.3);
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.modal-tags-full {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-}
-
-.modal-tags-full .tag {
-  background: rgba(255,255,255,0.15);
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 13px;
-  backdrop-filter: blur(10px);
-  color: #fff;
-}
-
-#modal-desc-full {
-  font-size: 14px;
-  line-height: 20px;
-  opacity: 0.9;
-  margin-bottom: 20px;
-}
-
-.modal-botoes {
-  display: flex;
-  gap: 12px;
-}
-
-.btn-confirmar {
-  flex: 1;
-  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743);
-  border: none;
-  color: white;
-  padding: 16px;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  box-shadow: 0 8px 20px rgba(220, 39, 67, 0.4);
-  transition: transform 0.2s;
-}
-
-.btn-confirmar:active {
-  transform: scale(0.95);
-}
-
-.btn-confirmar small {
-  font-size: 11px;
-  opacity: 0.9;
-  font-weight: 500;
-}
-
-.btn-confirmar.confirmado {
-  background: rgba(255,255,255,0.2);
-  box-shadow: none;
-}
-
-.btn-checkin, .btn-compartilhar-modal {
-  background: rgba(255,255,255,0.15);
-  border: none;
-  color: white;
-  width: 54px;
-  height: 54px;
-  border-radius: 12px;
-  font-size: 24px;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-}
-
-.btn-checkin.feito {
-  background: #00C851;
-}
-
-/* Modal Stories */
-.modal-stories {
-  display: none;
-  position: fixed;
-  z-index: 4000;
-  inset: 0;
-  background: #000;
-}
-
-.modal-stories.ativo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.stories-viewer {
-  position: relative;
-  width: 100%;
-  max-width: 450px;
-  height: 100vh;
-  max-height: 900px;
-  background: #000;
-  display: flex;
-  flex-direction: column;
-}
-
-.stories-progresso {
-  display: flex;
-  gap: 4px;
-  padding: 12px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-}
-
-.stories-progresso .barra {
-  flex: 1;
-  height: 2px;
-  background: rgba(255,255,255,0.3);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.stories-progresso .barra .preenchido {
-  height: 100%;
-  background: #fff;
-  width: 0%;
-  transition: width 0.1s linear;
-}
-
-.stories-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 40px 16px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 10;
-  background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
-}
-
-.stories-user {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.stories-user img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-}
-
-.stories-user strong {
-  font-size: 14px;
-  display: block;
-}
-
-.stories-user span {
-  font-size: 12px;
-  opacity: 0.8;
-}
-
-.stories-fechar {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 32px;
-  cursor: pointer;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-}
-
-#stories-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.stories-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 16px;
-  display: flex;
-  gap: 12px;
-  background: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, transparent 100%);
-}
-
-.stories-input {
-  flex: 1;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 20px;
-  padding: 12px 16px;
-  color: white;
-  font-size: 14px;
-}
-
-.stories-input::placeholder {
-  color: rgba(255,255,255,0.6);
-}
-
-.stories-footer button {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 20px;
-  padding: 12px 20px;
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-/* Mobile */
-@media (max-width: 900px) {
-  .map-sidebar {
-    display: none;
-  }
- .container {
-    padding: 0;
-  }
- .feed-wrapper {
-    max-width: 100%;
-  }
- .post {
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-  }
-  .stories-bar, .ranking-container {
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-  }
-}
-
-@media (max-width: 768px) {
-.modal-foto-wrapper {
-    max-width: 100%;
-    border-radius: 0;
-    max-height: 100vh;
-  }
-  #modal-nome-full {
-    font-size: 28px;
-  }
-  .stories-viewer {
-    max-width: 100%;
-    max-height: 100vh;
-  }
-}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rolê ITZ 🔥</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>Rolê ITZ 🔥</h1>
+      <div class="filtros">
+        <button class="filtro-ativo" data-tag="todos">🔥 Bombando</button>
+        <button data-tag="sertanejo">Sertanejo</button>
+        <button data-tag="funk">Funk</button>
+        <button data-tag="eletronica">Eletrônica</button>
+        <button data-tag="forro">Forró</button>
+        <button data-tag="pagode">Pagode</button>
+        <button data-tag="ranking">👑 Top 5</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="feed-wrapper">
+      <!-- Barra de Stories estilo Instagram -->
+      <div class="stories-bar">
+        <div class="stories-container" id="stories-container"></div>
+      </div>
+      
+      <!-- Ranking Semanal -->
+      <div id="ranking-semanal" class="ranking-container" style="display: none;"></div>
+      
+      <div id="feed"></div>
+    </div>
+    
+    <div class="map-sidebar">
+      <div class="map-controles">
+        <button id="btn-heatmap" class="btn-map-ctrl">🔥 Mapa de Calor</button>
+        <button id="btn-perto" class="btn-map-ctrl">📍 Perto de mim</button>
+      </div>
+      <div id="map"></div>
+    </div>
+  </div>
+
+  <!-- Modal Imersivo Full -->
+  <div id="modal" class="modal">
+    <div class="modal-bg"></div>
+    <div class="modal-content-full">
+      <div class="modal-barra-top">
+        <div class="modal-progresso"></div>
+      </div>
+
+      <button class="modal-fechar-full">&times;</button>
+
+      <div class="modal-foto-wrapper">
+        <img id="modal-img-full" src="" alt="">
+        <div class="modal-gradiente"></div>
+
+        <div class="modal-overlay-info">
+          <div class="modal-tag-lotacao">
+            <span class="pulse"></span>
+            <span id="modal-status">🔥 BOMBA HOJE</span>
+          </div>
+
+          <div id="modal-countdown" class="modal-countdown">
+            <span>COMEÇA EM</span>
+            <strong id="modal-timer">02:15:33</strong>
+          </div>
+
+          <h2 id="modal-nome-full"></h2>
+          <p id="modal-atracao-full"></p>
+
+          <div class="modal-stats">
+            <div class="stat">
+              <strong id="modal-bombando-full">0</strong>
+              <span>confirmaram</span>
+            </div>
+            <div class="stat">
+              <strong id="modal-hora-full">22h</strong>
+              <span>abre</span>
+            </div>
+            <div class="stat">
+              <strong id="modal-preco-full">R$ 0</strong>
+              <span>entrada</span>
+            </div>
+          </div>
+
+          <div class="modal-aviso">
+            <span>⏰</span>
+            <p id="modal-urgencia">Últimas 47 vagas no 1º lote</p>
+          </div>
+
+          <div id="modal-tags-full" class="modal-tags-full"></div>
+
+          <p id="modal-desc-full"></p>
+
+          <div class="modal-botoes">
+            <button id="modal-btn-full" class="btn-confirmar">
+              <span>GARANTIR MINHA VAGA</span>
+              <small>Restam <b id="modal-vagas">47</b></small>
+            </button>
+            <button class="btn-checkin" onclick="fazerCheckin()">
+              <span>📍</span>
+            </button>
+            <button class="btn-compartilhar-modal" onclick="compartilharModal()">
+              <span>📤</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Stories -->
+  <div id="modal-stories" class="modal-stories">
+    <div class="stories-viewer">
+      <div class="stories-progresso" id="stories-progresso"></div>
+      <div class="stories-header">
+        <div class="stories-user">
+          <img id="stories-avatar" src="" alt="">
+          <div>
+            <strong id="stories-nome"></strong>
+            <span id="stories-tempo">2h</span>
+          </div>
+        </div>
+        <button class="stories-fechar">&times;</button>
+      </div>
+      <img id="stories-img" src="" alt="">
+      <div class="stories-footer">
+        <input type="text" placeholder="Responder..." class="stories-input">
+        <button onclick="irParaRole()">📍 Ver rolê</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>
